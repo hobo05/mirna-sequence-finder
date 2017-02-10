@@ -1,0 +1,33 @@
+{
+  "name": "mirna-sequence-finder",
+  "version": "1.0.0",
+  "description": "Find miRNA sequences",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "build": "webpack --config webpack.config.js",
+    "start": "nodemon index"
+  },
+  "author": "tim.cheng09@gmail.com",
+  "license": "MIT",
+  "devDependencies": {
+    "bootstrap": "^3.3.7",
+    "chai": "^3.5.0",
+    "css-loader": "^0.26.1",
+    "express": "^4.14.1",
+    "extract-text-webpack-plugin": "^2.0.0-rc.3",
+    "jquery": "^3.1.1",
+    "mocha": "^3.2.0",
+    "nodemon": "^1.11.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^2.2.1",
+    "webpack-dev-middleware": "^1.10.0"
+  },
+  "dependencies": {
+    "ejs": "^2.5.5",
+    "exceljs": "^0.2.42",
+    "express": "^4.14.1",
+    "lodash": "^4.17.4",
+    "xlsx": "^0.8.2"
+  }
+}

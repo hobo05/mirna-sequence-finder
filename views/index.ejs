@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="styles.css">
+
+  </head>
+  <body>
+	<div class="container">
+		<h1><%= title %></h1>
+
+		<h2>miRNA #1 vs miRNA #2</h2>
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">Matching Results for BLAH</h3>
+		  </div>
+		  <div class="panel-body">
+		  	<div class="container">
+		  		<h3><span class="label label-success">100%</span> Overlap</h3>
+		  		<h3>Subsequence: uagcagcacauug<span class="highlight">aaa</span>uauu</h3>
+				<ul class="list-group">
+				  <li class="list-group-item">Match #1 - <span class="highlight">aaa</span>sdfaaajkhsdaaa</li>
+				  <li class="list-group-item">Match #2 - aaasdf<span class="highlight">aaa</span>jkhsdaaa</li>
+				  <li class="list-group-item">Match #3 - aaasdfaaajkhsd<span class="highlight">aaa</span></li>
+				</ul>
+		  	</div>
+		  </div>
+		</div>
+
+	</div>
+
+    <script type="text/javascript" src="bundle.js"></script>
+  </body>
+</html>
