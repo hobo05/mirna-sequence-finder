@@ -5,20 +5,22 @@ require('dotenv').load();
 
 var express = require('express');
 
-var webpackDevMiddleware = require("webpack-dev-middleware");
-var webpack = require("webpack");
-var webpackConfig = require("./webpack.config");
-
 var app = express();
 
 var path = require("path");
 var ejs = require('ejs');
 
-var compiler = webpack(webpackConfig);
 
-app.use(webpackDevMiddleware(compiler, {
-  publicPath: "/" // Same as `output.publicPath` in most cases.
-}));
+if (process.env.NODE_ENV === "development") {
+	var webpackDevMiddleware = require("webpack-dev-middleware");
+	var webpack = require("webpack");
+	var webpackConfig = require("./webpack.config");
+	var compiler = webpack(webpackConfig);
+
+	app.use(webpackDevMiddleware(compiler, {
+	  publicPath: "/" // Same as `output.publicPath` in most cases.
+	}));
+}
 
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
@@ -57,5 +59,5 @@ app.get('/', function(req, res) {
 })
 
 app.listen(process.env.PORT, function () {
-  console.log("Listening on port 3000!");
+  console.log(`Listening on port ${process.env.PORT}!`);
 });
