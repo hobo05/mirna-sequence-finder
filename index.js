@@ -1,5 +1,8 @@
 "use strict";
 
+// load env vars
+require('dotenv').load();
+
 var express = require('express');
 
 var webpackDevMiddleware = require("webpack-dev-middleware");
@@ -9,7 +12,7 @@ var webpackConfig = require("./webpack.config");
 var app = express();
 
 var path = require("path");
-
+var ejs = require('ejs');
 
 var compiler = webpack(webpackConfig);
 
@@ -37,7 +40,7 @@ var sequenceMatchResultsArrayPromise = excelLoader(excelFilename).then(sequenceI
     		let sourceSequenceInfo = sequenceInfoArray[i];
     		for (let j = i+1; j < sequenceInfoArray.length; j++) {
     			let targetSequenceInfo = sequenceInfoArray[j];
-    			const matchResults = sequenceMatcher.findMatches(sourceSequenceInfo.sequence, targetSequenceInfo.sequence);
+    			const matchResults = sequenceMatcher.findMatches(sourceSequenceInfo, targetSequenceInfo);
     			matchResults.printResults();
     			sequenceMatchResultsArray.push(matchResults);
     		}
@@ -53,6 +56,6 @@ app.get('/', function(req, res) {
 	}));
 })
 
-app.listen(3000, function () {
+app.listen(process.env.PORT, function () {
   console.log("Listening on port 3000!");
 });

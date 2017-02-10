@@ -13,7 +13,7 @@ excelLoader(excelFilename).then(sequenceInfoArray => {
     		let sourceSequenceInfo = sequenceInfoArray[i];
     		for (let j = i+1; j < sequenceInfoArray.length; j++) {
     			let targetSequenceInfo = sequenceInfoArray[j];
-    			const matchResults = sequenceMatcher.findMatches(sourceSequenceInfo.sequence, targetSequenceInfo.sequence);
+    			const matchResults = sequenceMatcher.findMatches(sourceSequenceInfo, targetSequenceInfo);
     			matchResults.printResults();
     			sequenceMatchResultsArray.push(matchResults);
     		}

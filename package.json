@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha",
     "build": "webpack --config webpack.config.js",
-    "start": "nodemon index"
+    "start": "node index",
+    "heroku-postbuild": "NODE_ENV=production webpack --config ./webpack.config.js --progress --profile --colors"
   },
   "author": "tim.cheng09@gmail.com",
   "license": "MIT",
@@ -24,6 +25,7 @@
     "webpack-dev-middleware": "^1.10.0"
   },
   "dependencies": {
+    "dotenv": "^4.0.0",
     "ejs": "^2.5.5",
     "exceljs": "^0.2.42",
     "express": "^4.14.1",

@@ -15,23 +15,80 @@
 	<div class="container">
 		<h1><%= title %></h1>
 
-		<h2>miRNA #1 vs miRNA #2</h2>
-		<div class="panel panel-default">
-		  <div class="panel-heading">
-		    <h3 class="panel-title">Matching Results for BLAH</h3>
-		  </div>
-		  <div class="panel-body">
-		  	<div class="container">
-		  		<h3><span class="label label-success">100%</span> Overlap</h3>
-		  		<h3>Subsequence: uagcagcacauug<span class="highlight">aaa</span>uauu</h3>
-				<ul class="list-group">
-				  <li class="list-group-item">Match #1 - <span class="highlight">aaa</span>sdfaaajkhsdaaa</li>
-				  <li class="list-group-item">Match #2 - aaasdf<span class="highlight">aaa</span>jkhsdaaa</li>
-				  <li class="list-group-item">Match #3 - aaasdfaaajkhsd<span class="highlight">aaa</span></li>
-				</ul>
-		  	</div>
-		  </div>
-		</div>
+		<%
+
+		function getLabelClass(roundedPercentage) {
+			let labelClass = "label-default";
+			if (roundedPercentage >= 80) {
+				labelClass = "label-success";
+		    } else if (roundedPercentage >= 30) {
+		    	labelClass = "label-warning";
+		    } else if (roundedPercentage > 0) {
+		    	labelClass = "label-danger";
+		    }
+		    return labelClass;
+		}
+
+		function getPercentageLabel(unroundedPercentage) {
+		    let roundedPercentage = +(unroundedPercentage * 100).toFixed(2);
+		    let labelClass = getLabelClass(roundedPercentage);
+		    return `<span class="label ${labelClass}">${roundedPercentage}%</span>`;
+		}
+
+		function getTotalPercentage(subSequenceMatchResultsArray) {
+			let unroundedPercentage = 0;
+			subSequenceMatchResultsArray.forEach(matchResults => {
+				unroundedPercentage += matchResults.percentage();
+			});
+
+		    return +(unroundedPercentage * 100).toFixed(2);
+		}
+
+		function highlight(sequence, substringTuple) {
+			let subSequence = sequence.substring(substringTuple.start, substringTuple.end);
+			return sequence.replace(new RegExp(subSequence), `<span class="highlight">${subSequence}</span>`);
+		};
+
+		%>
+
+		<% sequenceMatchResultsArray.forEach(sequenceMatchResults => { %>
+			<h2><%= sequenceMatchResults.sourceSequenceInfo.name %> vs <%= sequenceMatchResults.targetSequenceInfo.name %></h2>
+
+			<% sequenceMatchResults.subSequenceMatchResultsArray.forEach(matchResults => { %>
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    <h3 class="panel-title">Matching Results for <%- highlight(matchResults.sourceSequenceInfo.sequence, matchResults.subSequenceSubstringTuple) %></h3>
+			  </div>
+			  <div class="panel-body">
+			  	<div class="container">
+			  		<h3><%- getPercentageLabel(matchResults.percentage()) %> Overlap</h3>
+			  		<h4>Target Sequence: <%= matchResults.targetSequenceInfo.sequence %></h3>
+					<ul class="list-group">
+						<% matchResults.matchSubstringTupleArray.forEach((targetSubstringTuple, index) => { %>
+					  	<li class="list-group-item">Match #<%= index+1 %> - <%- highlight(matchResults.targetSequenceInfo.sequence, targetSubstringTuple) %></li>
+					  	<% }); %>
+					</ul>
+			  	</div>
+			  </div>
+			</div>
+			<% }); %>
+
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    <h3 class="panel-title">Total Matching Percentage for <strong><%= sequenceMatchResults.sourceSequenceInfo.name %> vs <%= sequenceMatchResults.targetSequenceInfo.name %></strong></h3>
+			  </div>
+			  <div class="panel-body">
+			  	<div class="container">
+					<div class="progress">
+						<% let totalPercentage = getTotalPercentage(sequenceMatchResults.subSequenceMatchResultsArray) %>
+						<div class="progress-bar" role="progressbar" aria-valuenow="<%= totalPercentage %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= totalPercentage %>%;">
+					    	<%= totalPercentage %>%
+					  	</div>
+					</div>
+			  	</div>
+			  </div>
+			</div>
+		<% }); %>
 
 	</div>
 
